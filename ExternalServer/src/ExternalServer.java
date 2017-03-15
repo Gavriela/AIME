@@ -19,10 +19,11 @@ public class ExternalServer extends MaxObject {
 	public void dblclick() {
 		try {
 			client = in.accept();
+			System.out.println("client connected");
 			is = client.getInputStream();
+			outString = "";
 			
 			while (client.isConnected()) {
-				outString = "";
 				c = is.read();
 				if (c==-1) {break;}
 				if ((char) c != '\n') {
@@ -30,8 +31,12 @@ public class ExternalServer extends MaxObject {
 				}
 				else {
 					outlet(0, outString);
+					System.out.println("message received : " + outString);
+					outString = "";
 				}
 			}
+			
+			System.out.println("client disconnected");
 		} catch (Exception e) {}
 	}
 }
