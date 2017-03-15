@@ -7,11 +7,17 @@ public class ExternalServer extends MaxObject {
 	private Socket client;
 	private InputStream is;
 	private String outString;
-	int c;
+	private int c;
 	
-	public ExternalServer() {
+	public ExternalServer(Atom[] args) {
+		declareOutlets(new int[] {DataTypes.ALL});
 		try {
 			in = new ServerSocket(7300);
+		} catch(Exception e) {}
+	}
+	
+	public void dblclick() {
+		try {
 			client = in.accept();
 			is = client.getInputStream();
 			
@@ -26,6 +32,6 @@ public class ExternalServer extends MaxObject {
 					outlet(0, outString);
 				}
 			}
-		} catch(Exception e) {}
+		} catch (Exception e) {}
 	}
 }
