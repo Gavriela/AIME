@@ -7,6 +7,7 @@ public class ExternalServer extends MaxObject {
 	private Socket client;
 	private InputStream is;
 	private String outString;
+	private float[] data;
 	private int c;
 	
 	public ExternalServer(Atom[] args) {
@@ -30,8 +31,12 @@ public class ExternalServer extends MaxObject {
 					outString += (char) c;
 				}
 				else {
-					outlet(0, outString);
 					System.out.println("message received : " + outString);
+					data = new float[outString.split(" ").length];
+					for (int i=0 ; i<data.length ; i++) {
+						data[i] = Float.parseFloat(outString.split(" ")[i]);
+					}
+					outlet(0, data);
 					outString = "";
 				}
 			}
@@ -40,3 +45,4 @@ public class ExternalServer extends MaxObject {
 		} catch (Exception e) {}
 	}
 }
+
